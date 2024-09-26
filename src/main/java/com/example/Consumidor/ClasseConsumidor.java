@@ -1,55 +1,80 @@
 package com.example.Consumidor;
 
+import com.rabbitmq.client.*;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
 
-@SpringBootApplication
 public class ClasseConsumidor {
 
-    static final String topicExchangeName = "notificacao_topic";
-    static final String queueName = "fila-notificacoes";
-    static final String routingKeyPattern = "rh.*";  // ou *.alerta para receber alertas
+    private static final String EXCHANGE_NAME = "notificacoes_corporativas";
 
-    @Bean
-    Queue queue() {
-        return new Queue(queueName, false, false, true);
-    }
+    public static void main(String[] args) throws IOException, TimeoutException {
+        System.out.println("==== Sistema de Notificação Corporativa ====");
+        System.out.println("Selecione o consumidor:");
+        System.out.println("1. Consumidor de RH");
+        System.out.println("2. Consumidor de TI");
+        System.out.print("Opção: ");
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();
 
-    @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName, false, true);
-    }
+        String bindingKey;
+        String consumerName;
 
-    @Bean
-    Binding binding() {
-        return BindingBuilder.bind(queue()).to(exchange()).with(routingKeyPattern);
-    }
+        switch (choice) {
+            case "1":
+                consumerName = "Consumidor de RH";
+                bindingKey = "rh.*";
+                break;
+            case "2":
+                consumerName = "Consumidor de TI";
+                bindingKey = "ti.*";
+                break;
+            default:
+                System.out.println("Opção inválida.");
+                scanner.close();
+                return;
+        }
 
-    @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
+        System.out.println("\nIniciando " + consumerName + "...");
 
-    @Bean
-    MessageListenerAdapter listenerAdapter(Reciever reciever) {
-        return new MessageListenerAdapter(reciever, "receiveMessage");
-    }
+        // Configuração da conexão
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
 
-    public static void main(String[] args) {
-        SpringApplication.run(com.example.Consumidor.ClasseConsumidor.class, args);
+        // Declaração do exchange
+        channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
+
+        // Criação de uma fila temporária
+        String queueName = channel.queueDeclare().getQueue();
+
+        // Associação da fila ao exchange com a routing key apropriada
+        channel.queueBind(queueName, EXCHANGE_NAME, bindingKey);
+
+        System.out.println(consumerName + " aguardando mensagens...");
+
+        // Callback para recebimento de mensagens
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String mensagem = new String(delivery.getBody(), StandardCharsets.UTF_8);
+            String routingKeyReceived = delivery.getEnvelope().getRoutingKey();
+            System.out.println("\n[" + consumerName + "] Recebido: '" + mensagem + "' com a chave de roteamento '" + routingKeyReceived + "'");
+        };
+
+        // Início do consumo
+        channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
+
+        // Manter o aplicativo em execução
+        System.out.println("Pressione ENTER para sair.");
+        scanner.nextLine();
+
+        // Fechamento dos recursos
+        channel.close();
+        connection.close();
+        scanner.close();
     }
 }
+
