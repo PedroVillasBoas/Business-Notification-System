@@ -1,0 +1,4 @@
+[26/09/2024 - 00:08:25] Routing Key: 'rh.geral' - Mensagem: [26/09/2024 - 00:08] RH: "salve dagain"
+[26/09/2024 - 00:13:00] Routing Key: 'rh.geral' - Mensagem: [26/09/2024 - 00:12] RH: "mensagem"
+[26/09/2024 - 00:13:39] Routing Key: 'ti.manutencao' - Mensagem: [26/09/2024 - 00:13] TI: "cara"
+[26/09/2024 - 00:14:28] Routing Key: 'rh.beneficios' - Mensagem: [26/09/2024 - 00:14] RH: "exclusivos"

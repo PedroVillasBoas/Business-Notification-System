@@ -1,14 +1,21 @@
 import pika
 import datetime
+import ssl
 
 def send_message(producer_name, routing_key):
-    # Conexão com o RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    # Configurações de conexão
+    url = 'amqps://btykjupb:w1V5VdNdygWzDwsY5pi5C7p3pguzAwh0@prawn.rmq.cloudamqp.com/btykjupb'
+
+    # Parâmetros de conexão
+    parameters = pika.URLParameters(url)
+    parameters.ssl_options = pika.SSLOptions(ssl.create_default_context())
+
+    connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
-    
+
     # Declaração do exchange do tipo 'topic'
     channel.exchange_declare(exchange='notificacoes_corporativas', exchange_type='topic')
-    
+
     while True:
         mensagem = input("Digite a mensagem (ou 'sair' para encerrar): ")
         if mensagem.lower() == 'sair':
@@ -27,7 +34,7 @@ def main():
     print("1. Produtor de RH")
     print("2. Produtor de TI")
     escolha = input("Opção: ")
-    
+
     if escolha == '1':
         producer_name = 'RH'
         print("\nSelecione o tipo de mensagem:")

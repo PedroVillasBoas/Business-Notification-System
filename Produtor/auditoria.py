@@ -1,9 +1,15 @@
 import pika
 import datetime
+import ssl
 
 def main():
-    # Conexão com o RabbitMQ
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    # Configurações de conexão
+    url = 'amqps://btykjupb:w1V5VdNdygWzDwsY5pi5C7p3pguzAwh0@prawn.rmq.cloudamqp.com/btykjupb'
+
+    parameters = pika.URLParameters(url)
+    parameters.ssl_options = pika.SSLOptions(ssl.create_default_context())
+
+    connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
 
     # Declaração do exchange

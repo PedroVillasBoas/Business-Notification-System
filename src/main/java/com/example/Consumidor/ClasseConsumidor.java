@@ -3,7 +3,10 @@ package com.example.Consumidor;
 import com.rabbitmq.client.*;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
 
@@ -11,7 +14,7 @@ public class ClasseConsumidor {
 
     private static final String EXCHANGE_NAME = "notificacoes_corporativas";
 
-    public static void main(String[] args) throws IOException, TimeoutException {
+    public static void main(String[] args) throws IOException, TimeoutException, KeyManagementException, NoSuchAlgorithmException, URISyntaxException {
         System.out.println("==== Sistema de Notificação Corporativa ====");
         System.out.println("Selecione o consumidor:");
         System.out.println("1. Consumidor de RH");
@@ -42,7 +45,9 @@ public class ClasseConsumidor {
 
         // Configuração da conexão
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setUri("amqps://btykjupb:w1V5VdNdygWzDwsY5pi5C7p3pguzAwh0@prawn.rmq.cloudamqp.com/btykjupb");
+        factory.useSslProtocol(); // Habilitar SSL/TLS
+
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
@@ -77,4 +82,3 @@ public class ClasseConsumidor {
         scanner.close();
     }
 }
-
