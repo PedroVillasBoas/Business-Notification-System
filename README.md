@@ -48,3 +48,7 @@ python prod.py
 ```
 
 **⚠️ A sequência pode variar de acordo com o cenário que vai ser testado. ⚠️**
+
+### 🎥 Vídeo exemplificando o funcionamento da aplicação
+
+[Assista ao vídeo!](https://www.youtube.com/watch?v=pPQHttPxOts)
