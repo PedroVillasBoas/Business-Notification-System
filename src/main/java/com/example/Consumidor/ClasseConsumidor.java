@@ -1,7 +1,5 @@
 package com.example.Consumidor;
 
-import com.rabbitmq.client.*;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -9,6 +7,12 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.util.concurrent.TimeoutException;
+
+import com.rabbitmq.client.BuiltinExchangeType;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
 
 public class ClasseConsumidor {
 
@@ -45,7 +49,7 @@ public class ClasseConsumidor {
 
         // Configuração da conexão
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setUri("amqps://btykjupb:w1V5VdNdygWzDwsY5pi5C7p3pguzAwh0@prawn.rmq.cloudamqp.com/btykjupb");
+        factory.setUri("amqps://xliciseh:8kV_rlN6kX0t9LcC-9Juz4bdVqU8jzuj@prawn.rmq.cloudamqp.com/xliciseh");
         factory.useSslProtocol(); // Habilitar SSL/TLS
 
         Connection connection = factory.newConnection();

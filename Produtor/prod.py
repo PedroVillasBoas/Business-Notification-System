@@ -4,7 +4,7 @@ import ssl
 
 def send_message(producer_name, routing_key):
     # Configurações de conexão
-    url = 'amqps://btykjupb:w1V5VdNdygWzDwsY5pi5C7p3pguzAwh0@prawn.rmq.cloudamqp.com/btykjupb'
+    url = 'amqps://xliciseh:8kV_rlN6kX0t9LcC-9Juz4bdVqU8jzuj@prawn.rmq.cloudamqp.com/xliciseh'
 
     # Parâmetros de conexão
     parameters = pika.URLParameters(url)
@@ -24,7 +24,11 @@ def send_message(producer_name, routing_key):
         mensagem_formatada = f"[{timestamp}] {producer_name}: \"{mensagem}\""
         channel.basic_publish(exchange='notificacoes_corporativas',
                               routing_key=routing_key,
-                              body=mensagem_formatada)
+                              body=mensagem_formatada,
+                              properties=pika.BasicProperties(
+                                delivery_mode=2,  # Tornar a mensagem persistente
+                              )
+        )
         print(f"Enviada: {mensagem_formatada}")
     connection.close()
 
