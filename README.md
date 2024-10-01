@@ -49,4 +49,6 @@ python prod.py
 
 **⚠️ A sequência pode variar de acordo com o cenário que vai ser testado. ⚠️**
 
-https://www.youtube.com/watch?v=pPQHttPxOts
+### 🎥 Vídeo exemplificando o funcionamento da aplicação
+
+[Clique aqui!]https://www.youtube.com/watch?v=pPQHttPxOts
