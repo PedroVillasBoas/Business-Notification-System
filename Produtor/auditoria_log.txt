@@ -4,3 +4,7 @@
 [30/09/2024 - 23:01:19] Routing Key: 'rh.beneficios' - Mensagem: [30/09/2024 - 23:01] RH: "testando novamente cenario 2"
 [30/09/2024 - 23:06:28] Routing Key: 'ti.alerta' - Mensagem: [30/09/2024 - 23:06] TI: "nadanada"
 [30/09/2024 - 23:07:16] Routing Key: 'ti.alerta' - Mensagem: [30/09/2024 - 23:07] TI: "nadasemadutore"
+[30/09/2024 - 23:11:25] Routing Key: 'rh.geral' - Mensagem: [30/09/2024 - 23:11] RH: "notifica gerais teste 2"
+[30/09/2024 - 23:12:04] Routing Key: 'rh.beneficios' - Mensagem: [30/09/2024 - 23:12] RH: "ofertas e benefiios teste 2"
+[30/09/2024 - 23:12:30] Routing Key: 'ti.alerta' - Mensagem: [30/09/2024 - 23:12] TI: "alertas teste cen 2"
+[30/09/2024 - 23:13:02] Routing Key: 'ti.manutencao' - Mensagem: [30/09/2024 - 23:13] TI: "manutetion cen 2"
