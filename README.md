@@ -48,3 +48,5 @@ python prod.py
 ```
 
 **⚠️ A sequência pode variar de acordo com o cenário que vai ser testado. ⚠️**
+
+https://www.youtube.com/watch?v=pPQHttPxOts
