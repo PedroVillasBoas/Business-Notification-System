@@ -20,7 +20,7 @@ def main():
     queue_name = result.method.queue
 
     # Associação da fila ao exchange com a binding key '#'
-    channel.queue_bind(exchange='notificacoes_corporativas', queue=queue_name, routing_key='rh.#')
+    channel.queue_bind(exchange='notificacoes_corporativas', queue=queue_name, routing_key='*.#')
 
     print("Backend de Auditoria iniciando... Todas as mensagens serão gravadas em 'auditoria_log.txt'.")
 
