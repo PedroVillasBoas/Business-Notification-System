@@ -51,4 +51,4 @@ python prod.py
 
 ### 🎥 Vídeo exemplificando o funcionamento da aplicação
 
-[Clique aqui!]https://www.youtube.com/watch?v=pPQHttPxOts
+[Assista ao vídeo!](https://www.youtube.com/watch?v=pPQHttPxOts)
